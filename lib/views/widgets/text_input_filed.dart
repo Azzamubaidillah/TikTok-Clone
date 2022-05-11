@@ -11,7 +11,7 @@ class TextInputField extends StatelessWidget {
       {Key? key,
       required this.controller,
       required this.labelText,
-      required this.isObscure,
+      this.isObscure = false,
       required this.icon})
       : super(key: key);
 
