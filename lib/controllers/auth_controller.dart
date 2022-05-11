@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tiktok/constants.dart';
 import 'package:tiktok/models/user.dart' as model;
 import 'package:tiktok/views/screens/auth/login_screen.dart';
+import 'package:tiktok/views/screens/home_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -26,9 +27,9 @@ class AuthController extends GetxController {
 
   _setInitialScreen(User? user) {
     if (user == null) {
-      Get.offAllNamed(() => LoginScreen());
+      Get.offAll(() => LoginScreen());
     } else {
-      Get.offAllNamed(() => HomeScreen());
+      Get.offAll(() => HomeScreen());
     }
   }
 

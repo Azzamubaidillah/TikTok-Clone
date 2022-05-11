@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tiktok/constants.dart';
 import 'package:tiktok/views/widgets/text_input_filed.dart';
 
@@ -125,7 +126,7 @@ class SigunupScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => Get.back(),
                   child: Text(
                     'Login',
                     style: TextStyle(
