@@ -97,7 +97,11 @@ class SigunupScreen extends StatelessWidget {
                 ),
               ),
               child: InkWell(
-                onTap: () {},
+                onTap: () => authController.registerUser(
+                    _usernameController.text,
+                    _emailController.text,
+                    _passwordController.text,
+                    authController.profilePhoto),
                 child: const Center(
                   child: Text(
                     'Register',
@@ -121,11 +125,7 @@ class SigunupScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () => authController.registerUser(
-                      _usernameController.text,
-                      _emailController.text,
-                      _passwordController.text,
-                      image),
+                  onTap: () {},
                   child: Text(
                     'Login',
                     style: TextStyle(

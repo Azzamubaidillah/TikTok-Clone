@@ -10,6 +10,7 @@ import 'package:tiktok/models/user.dart' as model;
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<File?> _pickedImage;
+  File? get profilePhoto => _pickedImage.value;
 
   void pickImage() async {
     final pickedImage =
@@ -60,6 +61,26 @@ class AuthController extends GetxController {
     } catch (e) {
       Get.snackbar(
         'Error Creating Account',
+        e.toString(),
+      );
+    }
+  }
+
+  void loginUser(String email, String password) async {
+    try {
+      if (email.isNotEmpty && password.isNotEmpty) {
+        await firebaseAuth.signInWithEmailAndPassword(
+            email: email, password: password);
+        print("login success");
+      } else {
+        Get.snackbar(
+          'Error Logging In',
+          'Please fill all the field',
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error Logging In',
         e.toString(),
       );
     }
