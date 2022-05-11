@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok/constants.dart';
+import 'package:tiktok/views/widgets/custom_icons.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: (() => firebaseAuth.signOut()), child: Text("Signout")),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
           BottomNavigationBarItem(icon: CustomIcon(), label: ""),
