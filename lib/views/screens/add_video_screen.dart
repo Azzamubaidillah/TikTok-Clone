@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tiktok/views/screens/confirm_screen.dart';
@@ -8,9 +10,14 @@ class AddVideoScreen extends StatelessWidget {
   pickVideo(ImageSource src, BuildContext context) async {
     final video = await ImagePicker().pickVideo(source: src);
     if (video != null) {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const ConfirmScreen(),
-      ));
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ConfirmScreen(
+            videoFile: File(video.path),
+            videoPath: video.path,
+          ),
+        ),
+      );
     }
   }
 
@@ -48,11 +55,9 @@ class AddVideoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
-          child: ElevatedButton(
-            onPressed: () => showOptionsDialog(context),
-            child: const Text("Upload Video"),
-          ),
+        child: ElevatedButton(
+          onPressed: () => showOptionsDialog(context),
+          child: const Text("Upload Video"),
         ),
       ),
     );
