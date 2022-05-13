@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tiktok/controllers/upload_video_controller.dart';
 import 'package:tiktok/views/widgets/text_input_filed.dart';
+import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
 
 class ConfirmScreen extends StatefulWidget {
@@ -17,8 +20,11 @@ class ConfirmScreen extends StatefulWidget {
 
 class _ConfirmScreenState extends State<ConfirmScreen> {
   late VideoPlayerController controller;
-  TextEditingController songController = TextEditingController();
-  TextEditingController captionController = TextEditingController();
+  TextEditingController _songController = TextEditingController();
+  TextEditingController _captionController = TextEditingController();
+
+  UploadVideoController uploadVideoController =
+      Get.put(UploadVideoController());
 
   @override
   void initState() {
@@ -55,7 +61,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   width: MediaQuery.of(context).size.width - 12,
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextInputField(
-                    controller: songController,
+                    controller: _songController,
                     labelText: 'Song name',
                     icon: Icons.music_note,
                   ),
@@ -65,14 +71,17 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   width: MediaQuery.of(context).size.width - 12,
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextInputField(
-                    controller: captionController,
+                    controller: _captionController,
                     labelText: 'Caption',
                     icon: Icons.closed_caption,
                   ),
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => uploadVideoController.uploadVideo(
+                      _songController.text,
+                      _captionController.text,
+                      widget.videoPath),
                   child: const Text(
                     'Share!',
                     style: TextStyle(
