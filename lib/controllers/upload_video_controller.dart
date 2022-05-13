@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:tiktok/constants.dart';
+import 'package:tiktok/models/video.dart';
 import 'package:video_compress/video_compress.dart';
 
 class UploadVideoController extends GetxController {
@@ -44,8 +45,33 @@ class UploadVideoController extends GetxController {
       var allDocs = await firestore.collection('videos').get();
       int len = allDocs.docs.length;
 
-      String vidoeUrl = await _uploadVideoToStorage("Video $len", videoPath);
-      _uploadImageToStorage("Video $len", videoPath);
-    } catch (e) {}
+      String videoUrl = await _uploadVideoToStorage("Video $len", videoPath);
+
+      String thumbnail = await _uploadImageToStorage("Video $len", videoPath);
+
+      Video video = Video(
+          username: (userDoc.data()! as Map<String, dynamic>)['name'],
+          uid: uid,
+          id: "Video $len",
+          likes: [],
+          commentCount: 0,
+          shareCount: 0,
+          songName: songName,
+          caption: caption,
+          videoUrl: videoUrl,
+          profilePhoto:
+              (userDoc.data()! as Map<String, dynamic>)['profilePhoto'],
+          thumbnail: thumbnail);
+
+      await firestore.collection('videos').doc('video $len').set(
+            video.toJson(),
+          );
+      Get.back();
+    } catch (e) {
+      Get.snackbar(
+        'Error uploading video',
+        e.toString(),
+      );
+    }
   }
 }
